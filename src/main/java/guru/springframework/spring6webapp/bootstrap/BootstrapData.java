@@ -30,16 +30,13 @@ public class BootstrapData implements CommandLineRunner {
         john.setFirstname("John");
         john.setLastname("Mukenge");
 
-        Book ddd = new Book();
-        ddd.setTitle("Spring Boot Course");
-        ddd.setIsbn("123456");
-
-        Author johnSaved = authorRepository.save(john);
-        Book dddSaved = bookRepository.save(ddd);
-
         Author johnson = new Author();
         john.setFirstname("Johnson");
         john.setLastname("MukengeNJ");
+
+        Book ddd = new Book();
+        ddd.setTitle("Spring Boot Course");
+        ddd.setIsbn("123456");
 
         Book noEJB = new Book();
         ddd.setTitle("J2EE Development without EJB");
@@ -52,9 +49,15 @@ public class BootstrapData implements CommandLineRunner {
         publisher.setAddress("Via Guglielmo Oberdan");
         publisher.setState("Italy");
 
+        Author johnSaved = authorRepository.save(john);
         Author johnsonSaved = authorRepository.save(johnson);
+        Book dddSaved = bookRepository.save(ddd);
         Book noEJBSaved = bookRepository.save(noEJB);
-        Publisher publisherSaved = publisherRepository.save(publisher);
+        Publisher savedPublisher = publisherRepository.save(publisher);
+
+        dddSaved.setPublisher(savedPublisher);
+        noEJBSaved.setPublisher(savedPublisher);
+
 
         // create association between those things
 
@@ -63,7 +66,10 @@ public class BootstrapData implements CommandLineRunner {
 
         authorRepository.save(johnSaved);
         authorRepository.save(johnsonSaved);
-        publisherRepository.save(publisherSaved);
+        bookRepository.save(dddSaved);
+        bookRepository.save(noEJBSaved);
+        publisherRepository.save(savedPublisher);
+
 
         System.out.println("In Bootstrap");
         System.out.println("Author Count: " + authorRepository.count());
